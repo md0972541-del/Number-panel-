@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WINGO 990 SEQUENCE - DEVELOPER SAFAIT</title>
+    <title>WINGO SYNC FIX - DEVELOPER SAFAIT</title>
     <style>
         body { background: #000; color: #fff; font-family: 'Orbitron', sans-serif; text-align: center; height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .card { background: #0a0a0a; border: 3px solid #0f0; width: 360px; padding: 25px; border-radius: 40px; box-shadow: 0 0 80px rgba(0, 255, 0, 0.2); transition: 0.5s; position: relative; }
+        .card { background: #0a0a0a; border: 3px solid #00ff00; width: 360px; padding: 25px; border-radius: 40px; box-shadow: 0 0 100px rgba(0, 255, 0, 0.2); position: relative; }
         .period-box { background: #111; padding: 12px; border-radius: 15px; margin: 10px 0; color: #0f0; font-weight: bold; border: 1px solid #222; font-size: 14px; }
         .timer { font-size: 55px; font-weight: 900; color: #ff0000; margin: 5px 0; }
-        .res-card { background: #000; border: 2px dashed #333; border-radius: 25px; padding: 30px; margin-top: 10px; min-height: 200px; display: flex; flex-direction: column; justify-content: center; position: relative; }
-        .num-big { font-size: 100px; font-weight: 900; color: #fff; text-shadow: 0 0 40px #0f0; display: none; }
-        .status-text { font-size: 14px; color: #aaa; letter-spacing: 2px; }
-        .alert-active { border-color: #ff0000 !important; box-shadow: 0 0 100px rgba(255, 0, 0, 0.6) !important; animation: shake 0.5s infinite; }
-        @keyframes shake { 0% { transform: translate(1px, 1px); } 50% { transform: translate(-1px, -2px); } 100% { transform: translate(1px, 1px); } }
+        .res-card { background: #000; border: 2px dashed #333; border-radius: 25px; padding: 30px; margin-top: 10px; min-height: 200px; display: flex; flex-direction: column; justify-content: center; }
+        .num-big { font-size: 110px; font-weight: 900; color: #fff; text-shadow: 0 0 50px #0f0; display: none; }
+        .alert-active { border-color: #ff0000 !important; box-shadow: 0 0 120px rgba(255, 0, 0, 0.7) !important; animation: rapid-shake 0.3s infinite; }
+        @keyframes rapid-shake { 0% { transform: translateX(0); } 25% { transform: translateX(3px); } 50% { transform: translateX(-3px); } 100% { transform: translateX(0); } }
         .sync-btn { background: #111; color: #0f0; border: 1px solid #0f0; padding: 10px; border-radius: 10px; cursor: pointer; font-size: 11px; width: 45%; }
         .footer { font-size: 11px; color: #444; margin-top: 25px; border-top: 1px solid #222; padding-top: 15px; }
     </style>
@@ -22,16 +21,15 @@
 <body>
 
 <div class="card" id="mainCard">
-    <h2 style="color: #0f0; font-size: 15px; margin: 0;">AI SEQUENCE SNIPER v2.5</h2>
-    <div style="font-size: 9px; color: #0f0;">010-990 PATTERN SYNC: ACTIVE ●</div>
-
+    <h2 style="color: #0f0; font-size: 14px; margin: 0;">SNIPER SYNC v4.0</h2>
+    
     <div class="period-box" id="p">PERIOD: SYNCING...</div>
     <div class="timer" id="t">00s</div>
 
-    <div class="res-card" id="box">
-        <div id="status" class="status-text">SCANNING SEQUENCE...<br><span style="font-size:10px; color:#555;">(Waiting for 10-base period)</span></div>
+    <div class="res-card">
+        <div id="status" style="font-size: 14px; color: #aaa;">SCANNING SERVER...</div>
         <div id="n" class="num-big">?</div>
-        <div id="info" style="font-size: 24px; font-weight: bold; margin-top: 5px; display:none;">-- | --</div>
+        <div id="info" style="font-size: 26px; font-weight: bold; margin-top: 5px; display:none;">-- | --</div>
     </div>
 
     <div style="display:flex; justify-content: space-between; margin-top:15px;">
@@ -43,7 +41,9 @@
 </div>
 
 <script>
-    let offset = 41362; 
+    // আমি ৬৮ নম্বর কমিয়ে দিয়েছি যাতে এটি ৫৯৯ বা ৬০০ এর আশেপাশে থাকে
+    let offset = 41294; 
+
     function adj(v) { offset += v; update(); }
 
     function update() {
@@ -64,15 +64,14 @@
         const nDisp = document.getElementById('n');
         const infoDisp = document.getElementById('info');
 
-        // Ei logic-ti 010 theke 990 porjonto shob "10 sequence" track korbe
+        // ১০-সিকোয়েন্স অটো অ্যালার্ট
         if (finalSerial % 10 === 0) { 
             mainCard.classList.add('alert-active');
-            statusDisp.innerHTML = "<span style='color:#ff0000; font-weight:900;'>SURE SHOT SEQUENCE!</span>";
+            statusDisp.innerHTML = "<span style='color:#ff0000; font-weight:900;'>SURE SHOT!</span>";
             nDisp.style.display = "block";
             infoDisp.style.display = "block";
 
-            // Winning pattern loop
-            let patterns = [4, 9, 2, 7, 0, 5, 8, 3, 1, 6];
+            let patterns = [3, 8, 2, 7, 0, 5, 4, 9, 1, 6];
             let n = patterns[(finalSerial / 10) % 10];
             let sz = (n >= 5) ? "BIG" : "SMALL";
             let cl = (n % 2 === 0) ? "RED" : "GREEN";
@@ -83,7 +82,7 @@
         } else {
             mainCard.classList.remove('alert-active');
             statusDisp.style.display = "block";
-            statusDisp.innerHTML = "SCANNING SEQUENCE...<br><span style='font-size:10px; color:#555;'>WAIT FOR NEXT 10-SEQ</span>";
+            statusDisp.innerHTML = "WAITING FOR XX" + (Math.ceil((finalSerial + 1) / 10) * 10).toString().slice(-2);
             nDisp.style.display = "none";
             infoDisp.style.display = "none";
         }
