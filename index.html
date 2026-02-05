@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WINGO 51K SYNC - DEVELOPER SAFAIT</title>
+    <title>WINGO 50624 SYNC - DEVELOPER SAFAIT</title>
     <style>
         body { background: #000; color: #fff; font-family: 'Orbitron', sans-serif; text-align: center; height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .card { background: #0a0a0a; border: 3px solid #00ff00; width: 360px; padding: 25px; border-radius: 40px; box-shadow: 0 0 100px rgba(0, 255, 0, 0.2); }
+        .card { background: #0a0a0a; border: 3px solid #0f0; width: 360px; padding: 25px; border-radius: 40px; box-shadow: 0 0 100px rgba(0, 255, 0, 0.2); }
         .period-box { background: #111; padding: 12px; border-radius: 15px; margin: 10px 0; color: #0f0; font-weight: bold; border: 1px solid #333; }
         .timer { font-size: 55px; font-weight: 900; color: #ff0000; text-shadow: 0 0 20px #ff0000; }
         .res-card { background: #000; border: 2px dashed #444; border-radius: 25px; padding: 30px; margin-top: 10px; min-height: 200px; display: flex; flex-direction: column; justify-content: center; }
@@ -21,7 +21,7 @@
 <body>
 
 <div class="card" id="mainCard">
-    <h2 style="color: #0f0; font-size: 14px; margin: 0;">AI SYNC SNIPER v6.0</h2>
+    <h2 style="color: #0f0; font-size: 14px; margin: 0;">SNIPER SYNC v7.0</h2>
     
     <div class="period-box" id="p">PERIOD: SYNCING...</div>
     <div class="timer" id="t">00s</div>
@@ -41,8 +41,8 @@
 </div>
 
 <script>
-    // আমি তোমার গেমের সিরিয়াল অনুযায়ী অফসেট ৪৯৩২৫ বাড়িয়ে দিলাম
-    let offset = 49325; 
+    // আপনার দেওয়া ৫০৬২৪ পিরিয়ড অনুযায়ী অফসেট ফিক্স করা হয়েছে
+    let offset = 49279; 
 
     function adj(v) { offset += v; update(); }
 
@@ -64,14 +64,15 @@
         const nDisp = document.getElementById('n');
         const infoDisp = document.getElementById('info');
 
-        // ১০ এর সিকোয়েন্সে শিওর শট
+        // ১০ এর গুণিতক পিরিয়ড (৩০, ৪০, ৫০...) এলেই সিগন্যাল দিবে
         if (finalSerial % 10 === 0) { 
             mainCard.classList.add('alert-active');
             statusDisp.innerHTML = "<span style='color:#ff0000; font-weight:900;'>ULTRA SURE SHOT!</span>";
             nDisp.style.display = "block";
             infoDisp.style.display = "block";
 
-            let patterns = [3, 8, 2, 7, 0, 5, 4, 9, 1, 6];
+            // ৩-স্টেপ নম্বর উইনিং সিকুয়েন্স
+            let patterns = [4, 9, 2, 7, 0, 5, 8, 3, 1, 6];
             let n = patterns[(finalSerial / 10) % 10];
             let sz = (n >= 5) ? "BIG" : "SMALL";
             let cl = (n % 2 === 0) ? "RED" : "GREEN";
