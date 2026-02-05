@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WINGO 990 SEQUENCE - DEVELOPER SAFAIT</title>
+    <style>
+        body { background: #000; color: #fff; font-family: 'Orbitron', sans-serif; text-align: center; height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .card { background: #0a0a0a; border: 3px solid #0f0; width: 360px; padding: 25px; border-radius: 40px; box-shadow: 0 0 80px rgba(0, 255, 0, 0.2); transition: 0.5s; position: relative; }
+        .period-box { background: #111; padding: 12px; border-radius: 15px; margin: 10px 0; color: #0f0; font-weight: bold; border: 1px solid #222; font-size: 14px; }
+        .timer { font-size: 55px; font-weight: 900; color: #ff0000; margin: 5px 0; }
+        .res-card { background: #000; border: 2px dashed #333; border-radius: 25px; padding: 30px; margin-top: 10px; min-height: 200px; display: flex; flex-direction: column; justify-content: center; position: relative; }
+        .num-big { font-size: 100px; font-weight: 900; color: #fff; text-shadow: 0 0 40px #0f0; display: none; }
+        .status-text { font-size: 14px; color: #aaa; letter-spacing: 2px; }
+        .alert-active { border-color: #ff0000 !important; box-shadow: 0 0 100px rgba(255, 0, 0, 0.6) !important; animation: shake 0.5s infinite; }
+        @keyframes shake { 0% { transform: translate(1px, 1px); } 50% { transform: translate(-1px, -2px); } 100% { transform: translate(1px, 1px); } }
+        .sync-btn { background: #111; color: #0f0; border: 1px solid #0f0; padding: 10px; border-radius: 10px; cursor: pointer; font-size: 11px; width: 45%; }
+        .footer { font-size: 11px; color: #444; margin-top: 25px; border-top: 1px solid #222; padding-top: 15px; }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="card" id="mainCard">
+    <h2 style="color: #0f0; font-size: 15px; margin: 0;">AI SEQUENCE SNIPER v2.5</h2>
+    <div style="font-size: 9px; color: #0f0;">010-990 PATTERN SYNC: ACTIVE ●</div>
+
+    <div class="period-box" id="p">PERIOD: SYNCING...</div>
+    <div class="timer" id="t">00s</div>
+
+    <div class="res-card" id="box">
+        <div id="status" class="status-text">SCANNING SEQUENCE...<br><span style="font-size:10px; color:#555;">(Waiting for 10-base period)</span></div>
+        <div id="n" class="num-big">?</div>
+        <div id="info" style="font-size: 24px; font-weight: bold; margin-top: 5px; display:none;">-- | --</div>
+    </div>
+
+    <div style="display:flex; justify-content: space-between; margin-top:15px;">
+        <button class="sync-btn" onclick="adj(-1)">- PERIOD</button>
+        <button class="sync-btn" onclick="adj(1)">+ PERIOD</button>
+    </div>
+
+    <div class="footer">DEVELOPED BY: <span style="color:#fff">DEVELOPER SAFAIT</span></div>
+</div>
+
+<script>
+    let offset = 41362; 
+    function adj(v) { offset += v; update(); }
+
+    function update() {
+        const now = new Date();
+        const sec = now.getSeconds();
+        let rem = 30 - (sec % 30);
+        document.getElementById('t').innerText = rem.toString().padStart(2, '0') + "s";
+
+        let totalSec = (now.getHours() * 3600) + (now.getMinutes() * 60) + sec;
+        let serial = Math.floor(totalSec / 30);
+        let finalSerial = offset + serial;
+        
+        let y = now.getFullYear(), m = (now.getMonth()+1).toString().padStart(2,'0'), d = now.getDate().toString().padStart(2,'0');
+        document.getElementById('p').innerText = "PERIOD: " + y + m + d + "30" + finalSerial;
+
+        const mainCard = document.getElementById('mainCard');
+        const statusDisp = document.getElementById('status');
+        const nDisp = document.getElementById('n');
+        const infoDisp = document.getElementById('info');
+
+        // Ei logic-ti 010 theke 990 porjonto shob "10 sequence" track korbe
+        if (finalSerial % 10 === 0) { 
+            mainCard.classList.add('alert-active');
+            statusDisp.innerHTML = "<span style='color:#ff0000; font-weight:900;'>SURE SHOT SEQUENCE!</span>";
+            nDisp.style.display = "block";
+            infoDisp.style.display = "block";
+
+            // Winning pattern loop
+            let patterns = [4, 9, 2, 7, 0, 5, 8, 3, 1, 6];
+            let n = patterns[(finalSerial / 10) % 10];
+            let sz = (n >= 5) ? "BIG" : "SMALL";
+            let cl = (n % 2 === 0) ? "RED" : "GREEN";
+            if(n === 0 || n === 5) cl = "VIOLET";
+
+            nDisp.innerText = n;
+            infoDisp.innerHTML = `${sz} | <span style="color: ${cl === 'RED' ? '#ff4444' : (cl === 'GREEN' ? '#00ff00' : '#bb66ff')}">${cl}</span>`;
+        } else {
+            mainCard.classList.remove('alert-active');
+            statusDisp.style.display = "block";
+            statusDisp.innerHTML = "SCANNING SEQUENCE...<br><span style='font-size:10px; color:#555;'>WAIT FOR NEXT 10-SEQ</span>";
+            nDisp.style.display = "none";
+            infoDisp.style.display = "none";
+        }
+    }
+
+    setInterval(update, 1000);
+    update();
+</script>
+</body>
+</html>
