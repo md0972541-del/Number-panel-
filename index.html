@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WINGO SURE SHOT - DEVELOPER SAFAIT</title>
+    <title>WINGO 51K SYNC - DEVELOPER SAFAIT</title>
     <style>
         body { background: #000; color: #fff; font-family: 'Orbitron', sans-serif; text-align: center; height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .card { background: #0a0a0a; border: 3px solid #00ff00; width: 360px; padding: 25px; border-radius: 40px; box-shadow: 0 0 100px rgba(0, 255, 0, 0.2); }
@@ -21,13 +21,13 @@
 <body>
 
 <div class="card" id="mainCard">
-    <h2 style="color: #0f0; font-size: 14px; margin: 0;">AI SERVER SNIPER v5.0</h2>
+    <h2 style="color: #0f0; font-size: 14px; margin: 0;">AI SYNC SNIPER v6.0</h2>
     
     <div class="period-box" id="p">PERIOD: SYNCING...</div>
     <div class="timer" id="t">00s</div>
 
     <div class="res-card">
-        <div id="status" style="font-size: 14px; color: #aaa;">SCANNING NEXT SEQUENCE...</div>
+        <div id="status" style="font-size: 14px; color: #aaa;">SCANNING SERVER...</div>
         <div id="n" class="num-big">?</div>
         <div id="info" style="font-size: 26px; font-weight: bold; margin-top: 5px; display:none;">-- | --</div>
     </div>
@@ -41,8 +41,8 @@
 </div>
 
 <script>
-    // ৫৯৮ পিরিয়ডের সাথে মিলিয়ে অফসেট ফিক্স করা হয়েছে
-    let offset = 41225; 
+    // আমি তোমার গেমের সিরিয়াল অনুযায়ী অফসেট ৪৯৩২৫ বাড়িয়ে দিলাম
+    let offset = 49325; 
 
     function adj(v) { offset += v; update(); }
 
@@ -64,15 +64,14 @@
         const nDisp = document.getElementById('n');
         const infoDisp = document.getElementById('info');
 
-        // ১০-এর সিকোয়েন্স (১০, ২০, ৩০...) হলেই শিওর শট সিগন্যাল আসবে
+        // ১০ এর সিকোয়েন্সে শিওর শট
         if (finalSerial % 10 === 0) { 
             mainCard.classList.add('alert-active');
             statusDisp.innerHTML = "<span style='color:#ff0000; font-weight:900;'>ULTRA SURE SHOT!</span>";
             nDisp.style.display = "block";
             infoDisp.style.display = "block";
 
-            // ৩-স্টেপ নম্বর উইনিং প্যাটার্ন
-            let patterns = [2, 7, 1, 9, 4, 8, 0, 5, 3, 6];
+            let patterns = [3, 8, 2, 7, 0, 5, 4, 9, 1, 6];
             let n = patterns[(finalSerial / 10) % 10];
             let sz = (n >= 5) ? "BIG" : "SMALL";
             let cl = (n % 2 === 0) ? "RED" : "GREEN";
