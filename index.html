@@ -3,44 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MASTER SNIPER - DEVELOPER SAFAIT</title>
+    <title>FINAL SNIPER - DEVELOPER SAFAIT</title>
     <style>
-        body { background: #000; color: #fff; font-family: 'Orbitron', sans-serif; text-align: center; height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        body { background: #000; color: #fff; font-family: 'Orbitron', sans-serif; text-align: center; height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; }
         .card { background: #0a0a0a; border: 3px solid #00ff00; width: 360px; padding: 25px; border-radius: 40px; box-shadow: 0 0 100px rgba(0, 255, 0, 0.2); }
         .period-box { background: #111; padding: 12px; border-radius: 15px; margin: 10px 0; color: #0f0; font-weight: bold; border: 1px solid #333; }
-        .timer { font-size: 55px; font-weight: 900; color: #ff0000; }
-        .res-card { background: #000; border: 2px dashed #444; border-radius: 25px; padding: 20px; margin-top: 10px; min-height: 250px; display: flex; flex-direction: column; justify-content: center; }
-        .num-row { display: flex; justify-content: center; gap: 20px; font-size: 90px; font-weight: 900; display: none; text-shadow: 0 0 30px #0f0; }
-        .bs-text { font-size: 40px; font-weight: bold; color: #ffcc00; display: none; margin-top: 10px; border: 1px solid #ffcc00; border-radius: 10px; padding: 5px; }
+        .timer { font-size: 50px; font-weight: 900; color: #ff0000; }
+        .res-card { background: #000; border: 2px dashed #444; border-radius: 25px; padding: 20px; margin-top: 10px; min-height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        
+        /* নম্বর দুটিকে সুন্দরভাবে পাশাপাশি দেখানোর জন্য */
+        .num-wrapper { display: flex; justify-content: center; gap: 30px; width: 100%; margin: 10px 0; display: none; }
+        .n-box { font-size: 90px; font-weight: 900; color: #fff; text-shadow: 0 0 30px #0f0; }
+        
+        .bs-display { font-size: 35px; font-weight: bold; color: #ffcc00; display: none; border: 2px solid #ffcc00; padding: 10px 30px; border-radius: 15px; margin-top: 15px; }
+        
         .alert-active { border-color: #ff0000 !important; box-shadow: 0 0 120px rgba(255, 0, 0, 0.7) !important; animation: shake 0.3s infinite; }
         @keyframes shake { 0% { transform: translate(0); } 25% { transform: translate(2px, 2px); } 50% { transform: translate(-2px, -2px); } 100% { transform: translate(0); } }
         .sync-btn { background: #111; color: #0f0; border: 1px solid #0f0; padding: 10px; border-radius: 10px; cursor: pointer; width: 45%; }
-        .footer { font-size: 11px; color: #444; margin-top: 25px; border-top: 1px solid #222; padding-top: 15px; }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <div class="card" id="mainCard">
-    <h2 style="color: #0f0; font-size: 14px; margin: 0; letter-spacing: 2px;">AI MASTER SNIPER v11.0</h2>
-    
+    <h2 style="color: #0f0; font-size: 14px; margin: 0;">AI MASTER SNIPER v11.5</h2>
     <div class="period-box" id="p">PERIOD: SYNCING...</div>
     <div class="timer" id="t">00s</div>
 
     <div class="res-card">
         <div id="status" style="font-size: 14px; color: #aaa;">SCANNING SERVER...</div>
-        <div class="num-row" id="numRow">
-            <span id="n1">?</span><span style="color:#555">|</span><span id="n2">?</span>
+        
+        <div class="num-wrapper" id="numWrapper">
+            <div class="n-box" id="n1">?</div>
+            <div class="n-box" id="n2">?</div>
         </div>
-        <div class="bs-text" id="bsText">--</div>
+        
+        <div class="bs-display" id="bsDisplay">--</div>
     </div>
 
     <div style="display:flex; justify-content: space-between; margin-top:15px;">
         <button class="sync-btn" onclick="adj(-1)">- 1</button>
         <button class="sync-btn" onclick="adj(1)">+ 1</button>
     </div>
-
-    <div class="footer">DEVELOPED BY: <span style="color:#fff">DEVELOPER SAFAIT</span></div>
+    <div style="font-size: 11px; color: #444; margin-top: 15px;">DEVELOPED BY: DEVELOPER SAFAIT</div>
 </div>
 
 <script>
@@ -62,32 +67,32 @@
 
         const mainCard = document.getElementById('mainCard');
         const statusDisp = document.getElementById('status');
-        const numRow = document.getElementById('numRow');
-        const bsText = document.getElementById('bsText');
+        const numWrapper = document.getElementById('numWrapper');
+        const bsDisplay = document.getElementById('bsDisplay');
 
-        // ১০-সিকোয়েন্স এ সিগন্যাল
+        // ১০-এর সিকোয়েন্স অ্যালার্ট
         if (finalSerial % 10 === 0) { 
             mainCard.classList.add('alert-active');
-            statusDisp.innerHTML = "<span style='color:#00ff00;'>HIGH PROBABILITY!</span>";
-            numRow.style.display = "flex";
-            bsText.style.display = "block";
+            statusDisp.innerHTML = "<span style='color:#00ff00;'>SURE SHOT!</span>";
+            numWrapper.style.display = "flex";
+            bsDisplay.style.display = "block";
 
-            // ২-নম্বর এবং বিগ/স্মল লজিক
-            let p1 = [2, 7, 0, 5, 4, 9, 3, 8, 1, 6];
-            let n1 = p1[(finalSerial / 10) % 10];
-            let n2 = (n1 + 5) % 10; // অপোজিট নম্বর ব্যাকআপ
+            // নম্বর ও বিগ/স্মল ক্যালকুলেশন
+            let p1 = [4, 9, 1, 6, 2, 7, 3, 8, 0, 5];
+            let num1 = p1[(finalSerial / 10) % 10];
+            let num2 = (num1 >= 5) ? (num1 - 3) : (num1 + 3); // ব্যাকআপ নম্বর
             
-            let bigSmall = (n1 >= 5) ? "BIG" : "SMALL";
+            let resBS = (num1 >= 5) ? "BIG" : "SMALL";
 
-            document.getElementById('n1').innerText = n1;
-            document.getElementById('n2').innerText = n2;
-            bsText.innerText = bigSmall;
+            document.getElementById('n1').innerText = num1;
+            document.getElementById('n2').innerText = num2;
+            bsDisplay.innerText = resBS;
         } else {
             mainCard.classList.remove('alert-active');
             statusDisp.style.display = "block";
-            statusDisp.innerHTML = "WAITING FOR NEXT TREND...";
-            numRow.style.display = "none";
-            bsText.style.display = "none";
+            statusDisp.innerHTML = "WAITING FOR TREND...";
+            numWrapper.style.display = "none";
+            bsDisplay.style.display = "none";
         }
     }
 
