@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOUBLE SNIPER - DEVELOPER SAFAIT</title>
+    <title>MASTER SNIPER - DEVELOPER SAFAIT</title>
     <style>
         body { background: #000; color: #fff; font-family: 'Orbitron', sans-serif; text-align: center; height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .card { background: #0a0a0a; border: 3px solid #0f0; width: 360px; padding: 25px; border-radius: 40px; box-shadow: 0 0 80px rgba(0, 255, 0, 0.2); transition: 0.5s; }
-        .period-box { background: #111; padding: 12px; border-radius: 15px; margin: 10px 0; color: #0f0; font-weight: bold; border: 1px solid #222; }
-        .timer { font-size: 50px; font-weight: 900; color: #ff0000; margin: 5px 0; }
-        .res-card { background: #000; border: 2px dashed #333; border-radius: 25px; padding: 20px; margin-top: 10px; min-height: 220px; display: flex; flex-direction: column; justify-content: center; }
-        .num-container { display: flex; justify-content: space-around; align-items: center; display: none; margin-top: 10px; }
-        .num-box { font-size: 80px; font-weight: 900; color: #fff; text-shadow: 0 0 30px #0f0; }
+        .card { background: #0a0a0a; border: 3px solid #00ff00; width: 360px; padding: 25px; border-radius: 40px; box-shadow: 0 0 100px rgba(0, 255, 0, 0.2); }
+        .period-box { background: #111; padding: 12px; border-radius: 15px; margin: 10px 0; color: #0f0; font-weight: bold; border: 1px solid #333; }
+        .timer { font-size: 55px; font-weight: 900; color: #ff0000; }
+        .res-card { background: #000; border: 2px dashed #444; border-radius: 25px; padding: 20px; margin-top: 10px; min-height: 250px; display: flex; flex-direction: column; justify-content: center; }
+        .num-row { display: flex; justify-content: center; gap: 20px; font-size: 90px; font-weight: 900; display: none; text-shadow: 0 0 30px #0f0; }
+        .bs-text { font-size: 40px; font-weight: bold; color: #ffcc00; display: none; margin-top: 10px; border: 1px solid #ffcc00; border-radius: 10px; padding: 5px; }
         .alert-active { border-color: #ff0000 !important; box-shadow: 0 0 120px rgba(255, 0, 0, 0.7) !important; animation: shake 0.3s infinite; }
-        @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(2px); } 50% { transform: translateX(-2px); } 100% { transform: translateX(0); } }
+        @keyframes shake { 0% { transform: translate(0); } 25% { transform: translate(2px, 2px); } 50% { transform: translate(-2px, -2px); } 100% { transform: translate(0); } }
         .sync-btn { background: #111; color: #0f0; border: 1px solid #0f0; padding: 10px; border-radius: 10px; cursor: pointer; width: 45%; }
         .footer { font-size: 11px; color: #444; margin-top: 25px; border-top: 1px solid #222; padding-top: 15px; }
     </style>
@@ -22,24 +22,22 @@
 <body>
 
 <div class="card" id="mainCard">
-    <h2 style="color: #0f0; font-size: 14px; margin: 0; letter-spacing: 2px;">DOUBLE NUMBER SNIPER</h2>
+    <h2 style="color: #0f0; font-size: 14px; margin: 0; letter-spacing: 2px;">AI MASTER SNIPER v11.0</h2>
     
     <div class="period-box" id="p">PERIOD: SYNCING...</div>
     <div class="timer" id="t">00s</div>
 
     <div class="res-card">
         <div id="status" style="font-size: 14px; color: #aaa;">SCANNING SERVER...</div>
-        <div class="num-container" id="numDiv">
-            <div class="num-box" id="n1">?</div>
-            <div style="font-size: 40px; color: #555;">|</div>
-            <div class="num-box" id="n2">?</div>
+        <div class="num-row" id="numRow">
+            <span id="n1">?</span><span style="color:#555">|</span><span id="n2">?</span>
         </div>
-        <div id="info" style="font-size: 20px; font-weight: bold; margin-top: 10px; display:none; color: #0f0;">PROBABILITY: 99%</div>
+        <div class="bs-text" id="bsText">--</div>
     </div>
 
     <div style="display:flex; justify-content: space-between; margin-top:15px;">
-        <button class="sync-btn" onclick="adj(-1)">- PERIOD</button>
-        <button class="sync-btn" onclick="adj(1)">+ PERIOD</button>
+        <button class="sync-btn" onclick="adj(-1)">- 1</button>
+        <button class="sync-btn" onclick="adj(1)">+ 1</button>
     </div>
 
     <div class="footer">DEVELOPED BY: <span style="color:#fff">DEVELOPER SAFAIT</span></div>
@@ -64,29 +62,32 @@
 
         const mainCard = document.getElementById('mainCard');
         const statusDisp = document.getElementById('status');
-        const numDiv = document.getElementById('numDiv');
-        const infoDisp = document.getElementById('info');
+        const numRow = document.getElementById('numRow');
+        const bsText = document.getElementById('bsText');
 
-        // ১০-সিকোয়েন্স এ ২ টি নম্বর সিগন্যাল দিবে
+        // ১০-সিকোয়েন্স এ সিগন্যাল
         if (finalSerial % 10 === 0) { 
             mainCard.classList.add('alert-active');
-            statusDisp.innerHTML = "<span style='color:#ff0000; font-weight:900;'>SURE SHOT DETECTED!</span>";
-            numDiv.style.display = "flex";
-            infoDisp.style.display = "block";
+            statusDisp.innerHTML = "<span style='color:#00ff00;'>HIGH PROBABILITY!</span>";
+            numRow.style.display = "flex";
+            bsText.style.display = "block";
 
-            // ২ টি নম্বরের ক্যালকুলেশন
-            let p1 = [3, 8, 2, 7, 1, 6, 0, 5, 4, 9];
+            // ২-নম্বর এবং বিগ/স্মল লজিক
+            let p1 = [2, 7, 0, 5, 4, 9, 3, 8, 1, 6];
             let n1 = p1[(finalSerial / 10) % 10];
-            let n2 = (n1 + 2) % 10; // ব্যাকআপ নম্বর
+            let n2 = (n1 + 5) % 10; // অপোজিট নম্বর ব্যাকআপ
+            
+            let bigSmall = (n1 >= 5) ? "BIG" : "SMALL";
 
             document.getElementById('n1').innerText = n1;
             document.getElementById('n2').innerText = n2;
+            bsText.innerText = bigSmall;
         } else {
             mainCard.classList.remove('alert-active');
             statusDisp.style.display = "block";
-            statusDisp.innerHTML = "WAITING FOR NEXT 10-SEQ...<br><span style='font-size:10px; color:#555;'>Patience = Profit</span>";
-            numDiv.style.display = "none";
-            infoDisp.style.display = "none";
+            statusDisp.innerHTML = "WAITING FOR NEXT TREND...";
+            numRow.style.display = "none";
+            bsText.style.display = "none";
         }
     }
 
